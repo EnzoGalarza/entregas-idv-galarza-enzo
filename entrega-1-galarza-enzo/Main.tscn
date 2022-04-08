@@ -13,7 +13,8 @@ texture = ExtResource( 2 )
 expand = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 522, 330 )
+position = Vector2( 524, 332 )
+speed = 500.0
 
 [node name="Floor" type="TextureRect" parent="."]
 anchor_top = 0.605
