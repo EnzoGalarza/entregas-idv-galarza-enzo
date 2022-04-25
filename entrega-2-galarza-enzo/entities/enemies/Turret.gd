@@ -1,28 +1,21 @@
 extends Sprite
 
-export (PackedScene) var projectile_scene : PackedScene
-onready var fire_position : Position2D = $FirePosition
+onready var fire_position = $FirePosition
+onready var fire_timer = $FireTimer
 
-var projectile_container : Node
-var player 
+export (PackedScene) var projectile_scene
 
-func set_values(player_to_set, projectile_container_to_set):
-	self.player = player_to_set
-	self.projectile_container = projectile_container_to_set	
-	$Timer.start()
+var player
+var projectile_container
 
+func initialize(container, turret_pos, player, projectile_container):
+	container.add_child(self)
+	global_position = turret_pos
+	self.player = player
+	self.projectile_container = projectile_container
+	fire_timer.connect("timeout", self, "fire_at_player")
+	fire_timer.start()
 
-func _on_Timer_timeout():
-	fire()
-
-func fire():
-	var projectile : Projectile = projectile_scene.instance()
-	projectile_container.add_child(projectile)
-	projectile.set_starting_values(fire_position.global_position,
-	 (player.global_position - fire_position.global_position).normalized())
-	
-	projectile.connect("delete_requested",self,"_on_projectile_delete_requested")
-
-func _on_projectile_delete_requested(projectile):
-	projectile_container.remove_child(projectile)
-	projectile.queue_free()
+func fire_at_player():
+	var proj_instance = projectile_scene.instance()
+	proj_instance.initialize(projectile_container, fire_position.global_position, fire_position.global_position.direction_to(player.global_position))

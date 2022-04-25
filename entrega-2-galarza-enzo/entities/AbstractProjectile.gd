@@ -1,24 +1,30 @@
 extends Sprite
-class_name Projectile
 
-signal delete_requested(projectile)
+onready var lifetime_timer = $Timer
 
-export (float) var speed
+export (float) var VELOCITY:float = 800.0
 
 var direction:Vector2
 
-func _ready():
-	set_physics_process(false)
-
-func set_starting_values(starting_position: Vector2, fire_direction : Vector2):
-	global_position = starting_position
-	self.direction = fire_direction
-	$Timer.start()
-	set_physics_process(true)
+func initialize(container, spawn_position:Vector2, direction:Vector2):
+	container.add_child(self)
+	self.direction = direction
+	global_position = spawn_position
+	lifetime_timer.connect("timeout", self, "_on_lifetime_timer_timeout")
+	lifetime_timer.start()
 
 func _physics_process(delta):
-	position += direction*speed*delta
+	position += direction * VELOCITY * delta
+	
+	var visible_rect:Rect2 = get_viewport().get_visible_rect()
+	if !visible_rect.has_point(global_position):
+		_remove()
 
+func _on_lifetime_timer_timeout():
+	_remove()
 
-func _on_Timer_timeout():
-	emit_signal("delete_requested", self)
+func _remove():
+	print("Limit, projectile removed!")
+	get_parent().remove_child(self)
+	queue_free()
+	
