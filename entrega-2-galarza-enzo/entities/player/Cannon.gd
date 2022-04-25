@@ -1,16 +1,16 @@
 extends Sprite
 
+onready var fire_position : Position2D = $FirePosition
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export (PackedScene) var projectile_scene : PackedScene
 
+var projectile_container : Node
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func fire():
+	var projectile_instance : Projectile = projectile_scene.instance()
+	var real_fire_position = fire_position.global_position - global_position
+	projectile_container.add_child(projectile_instance)
+	projectile_instance.set_starting_values(fire_position.global_position,real_fire_position.normalized())
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func set_container(container : Node):
+	projectile_container = container	

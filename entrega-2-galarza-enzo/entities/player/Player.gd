@@ -1,7 +1,13 @@
 extends Sprite
 
 onready var cannon : Sprite = $Cannon
+var projectile_container : Node
 var speed = 200
+
+
+func set_projectile_container(container : Node):
+	cannon.set_container(container)
+	projectile_container = container
 
 func _physics_process(delta):
 	
