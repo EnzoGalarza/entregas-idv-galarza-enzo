@@ -1,21 +1,22 @@
-extends Sprite
+extends KinematicBody2D
 
 onready var cannon = $Cannon
 
 export (float) var ACCELERATION:float = 20.0
 export (float) var H_SPEED_LIMIT:float = 600.0
 export (float) var FRICTION_WEIGHT:float = 0.1
+export (float) var JUMP_SPEED:float = -80
+export (float) var GRAVITY:float = 2
 
 var velocity:Vector2 = Vector2.ZERO
 var projectile_container
+var is_jumping: bool = false
 
 func initialize(projectile_container):
 	self.projectile_container = projectile_container
 	cannon.projectile_container = projectile_container
 
-func _physics_process(delta):
-	
-	# Cannon rotation
+func _get_input():
 	var mouse_position:Vector2 = get_global_mouse_position()
 	cannon.look_at(mouse_position)
 	
@@ -34,4 +35,18 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0, FRICTION_WEIGHT) if abs(velocity.x) > 1 else 0
 	
-	position += velocity * delta
+	if Input.is_action_just_pressed("jump") && !is_jumping:
+		velocity.y = JUMP_SPEED
+		is_jumping = true
+		
+func _physics_process(delta):
+	_get_input()
+	
+	velocity.y += GRAVITY
+	move_and_slide(velocity, Vector2.UP)
+	
+	if is_on_floor():
+		is_jumping = false
+	
+	#position += velocity * delta
+		 
