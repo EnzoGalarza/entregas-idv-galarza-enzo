@@ -1,5 +1,5 @@
 extends StaticBody2D
-
+class_name Turret
 onready var fire_position = $FirePosition
 onready var fire_timer = $FireTimer
 
@@ -31,9 +31,15 @@ func _on_DetectionArea_body_entered(body):
 		fire_timer.start()
 		set_physics_process(true)
 	
-
-
 func _on_DetectionArea_body_exited(body):
 	if target == body:
 		target = null
 		fire_timer.stop()
+
+func get_hit():
+	print('Turret destroyed')
+	call_deferred("_remove")		
+
+func _remove():
+	get_parent().remove_child(self)
+	queue_free()

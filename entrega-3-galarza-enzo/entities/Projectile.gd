@@ -1,6 +1,7 @@
 extends Sprite
 
 onready var lifetime_timer = $LifetimeTimer
+onready var hitbox = $Hitbox
 
 export (float) var VELOCITY:float = 800.0
 
@@ -21,11 +22,15 @@ func _on_lifetime_timer_timeout():
 	_remove()
 
 func _remove():
-	get_parent().remove_child(self)
+	var parent = get_parent()
+	if parent != null:
+		parent.remove_child(self)
 	queue_free()
 	
 
 
 func _on_Hitbox_body_entered(body):
-	if body is Player:
+	if body is Player or body is Turret:
 		body.get_hit() # Replace with function body.
+	hitbox.collision_mask = 0	
+	call_deferred("_remove")

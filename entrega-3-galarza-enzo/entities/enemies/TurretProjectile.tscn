@@ -13,9 +13,9 @@ VELOCITY = 400.0
 [node name="LifetimeTimer" parent="." index="0"]
 wait_time = 3.0
 
-[node name="Hitbox" type="Area2D" parent="." index="1"]
+[node name="Hitbox" parent="." index="1"]
+collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 1 )
-
-[connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]

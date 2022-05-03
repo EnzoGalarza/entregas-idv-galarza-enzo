@@ -2,6 +2,7 @@ extends Node2D
 
 export (PackedScene) var turret_scene
 export (Vector2) var lenght : Vector2
+
 func _ready():
 	call_deferred("_initialize")
 
