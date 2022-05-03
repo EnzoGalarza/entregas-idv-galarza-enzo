@@ -6,12 +6,11 @@ onready var cannon = $Cannon
 export (float) var ACCELERATION:float = 20.0
 export (float) var H_SPEED_LIMIT:float = 600.0
 export (float) var FRICTION_WEIGHT:float = 0.1
-export (float) var JUMP_SPEED:float = -80
-export (float) var GRAVITY:float = 2
+export (int) var JUMP_SPEED:float = -400
+export (int) var GRAVITY:float = 10
 
 var velocity:Vector2 = Vector2.ZERO
 var projectile_container
-var is_jumping: bool = false
 
 func initialize(projectile_container):
 	self.projectile_container = projectile_container
@@ -36,18 +35,24 @@ func _get_input():
 	else:
 		velocity.x = lerp(velocity.x, 0, FRICTION_WEIGHT) if abs(velocity.x) > 1 else 0
 	
-	if Input.is_action_just_pressed("jump") && !is_jumping:
+	var jump = Input.is_action_just_pressed('jump')
+	if jump and is_on_floor():
 		velocity.y = JUMP_SPEED
-		is_jumping = true
 		
+func get_hit():
+	print('Game over')
+	call_deferred("_game_over")
+	
+func _game_over():
+	set_physics_process(false)		
+	hide()
+	collision_layer = 0
+			
 func _physics_process(delta):
 	_get_input()
 	
 	velocity.y += GRAVITY
-	move_and_slide(velocity, Vector2.UP)
-	
-	if is_on_floor():
-		is_jumping = false
+	move_and_slide(velocity,Vector2.UP)
 	
 	#position += velocity * delta
 		 
