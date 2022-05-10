@@ -32,6 +32,11 @@ func _ready():
 	state_machine.set_parent(self)
 	PlayerData.call_deferred("set_max_health", max_health)
 
+func set_velocity(new_velocity):
+	velocity = new_velocity
+
+func apply_dash():
+	velocity.x = 3500 * move_direction
 
 func initialize(projectile_container):
 	self.projectile_container = projectile_container
@@ -65,7 +70,6 @@ func _apply_movement():
 	velocity = move_and_slide_with_snap(velocity, snap_vector, FLOOR_NORMAL, stop_on_slope, 4, SLOPE_THRESHOLD)
 	if is_on_floor() && snap_vector == Vector2.ZERO:
 		snap_vector = SNAP_DIRECTION * SNAP_LENGTH
-
 
 func notify_hit(amount):
 	state_machine.notify_hit(amount)
