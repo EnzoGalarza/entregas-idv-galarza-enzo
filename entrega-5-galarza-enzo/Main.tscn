@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/textures/floor.png" type="Texture" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 [ext_resource path="res://entities/enemies/Turret.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/textures/background.png" type="Texture" id=5]
+[ext_resource path="res://enviroment/CanvasLayer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://enviroment/objects/Platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://enviroment/objects/Ramp.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entities/SpawnManager.gd" type="Script" id=8]
@@ -49,13 +49,7 @@ extents = Vector2( 274.258, 29.8909 )
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="Background" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 511.866, 301.46 )
-scale = Vector2( 1.28716, 1.01413 )
-texture = ExtResource( 5 )
+[node name="CanvasLayer" parent="." instance=ExtResource( 5 )]
 
 [node name="Environment" type="Node2D" parent="."]
 
