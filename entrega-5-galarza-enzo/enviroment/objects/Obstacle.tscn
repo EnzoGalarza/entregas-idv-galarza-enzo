@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/textures/tileset/tileset_mk_16_16_nature_tileset_godot.png" type="Texture" id=1]
+
+[sub_resource type="PhysicsMaterial" id=1]
+rough = true
+absorbent = true
+
+[node name="Obstacle" type="RigidBody2D"]
+mass = 20.0
+physics_material_override = SubResource( 1 )
+gravity_scale = 10.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( -40, -120 )
+texture = ExtResource( 1 )
+polygon = PoolVector2Array( 47.8334, 96.1376, 63.9902, 111.897, 64.2551, 127.789, 48.4955, 143.946, 32.0739, 144.078, 16.0495, 128.319, 16.0495, 112.03, 32.2063, 96.0051 )
+uv = PoolVector2Array( 47.8334, 96.1376, 63.9902, 111.897, 64.2551, 127.789, 48.4955, 143.946, 32.0739, 144.078, 16.0495, 128.319, 16.0495, 112.03, 32.2063, 96.0051 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 8, -24, 24, -8, 24, 8, 8, 24, -8, 24, -24, 8, -24, -8, -8, -24 )
