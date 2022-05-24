@@ -49,6 +49,7 @@ func _handle_move_input():
 func _play_animation(animation_name):
 	if animation_player.has_animation(animation_name):
 		animation_player.play(animation_name)
+		print("Changing to " + animation_name + " animation")
 
 func _handle_deacceleration():
 	velocity.x = lerp(velocity.x, 0, FRICTION_WEIGHT) if abs(velocity.x) > 1 else 0
