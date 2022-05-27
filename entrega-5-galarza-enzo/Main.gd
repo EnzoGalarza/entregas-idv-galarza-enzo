@@ -11,6 +11,7 @@ func _unhandled_input(event):
 		_restart_level()
 
 func _restart_level():
-	Transition.reset()
-	get_tree().reload_current_scene()
+	if !Transition.changing:
+		Transition.reset()
+		get_tree().reload_current_scene()
 
