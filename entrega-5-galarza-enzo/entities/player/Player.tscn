@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://entities/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/states/WalkState.gd" type="Script" id=2]
@@ -7,10 +7,11 @@
 [ext_resource path="res://entities/player/PlayerProjectile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://entities/player/states/IdleState.gd" type="Script" id=6]
 [ext_resource path="res://assets/textures/player/girl_spritesheet.png" type="Texture" id=7]
-[ext_resource path="res://assets/textures/cannon.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/player/slimeGreen.png" type="Texture" id=8]
 [ext_resource path="res://entities/player/states/DeadState.gd" type="Script" id=9]
 [ext_resource path="res://entities/player/states/JumpState.gd" type="Script" id=10]
 [ext_resource path="res://entities/player/states/DashState.gd" type="Script" id=11]
+[ext_resource path="res://assets/textures/player/raygunPurpleBig.png" type="Texture" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 31.6034
@@ -154,15 +155,6 @@ hframes = 15
 vframes = 8
 frame = 47
 
-[node name="Cannon" type="Sprite" parent="."]
-position = Vector2( 3, -39 )
-texture = ExtResource( 8 )
-script = ExtResource( 4 )
-projectile_scene = ExtResource( 5 )
-
-[node name="CannonTip" type="Position2D" parent="Cannon"]
-position = Vector2( 16, 0 )
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
@@ -187,3 +179,16 @@ anims/dead = SubResource( 7 )
 anims/idle = SubResource( 4 )
 anims/jump = SubResource( 5 )
 anims/walk = SubResource( 3 )
+
+[node name="Slime" type="Sprite" parent="."]
+position = Vector2( 0, -40 )
+texture = ExtResource( 8 )
+
+[node name="Cannon" type="Sprite" parent="Slime"]
+position = Vector2( 3, 1 )
+texture = ExtResource( 12 )
+script = ExtResource( 4 )
+projectile_scene = ExtResource( 5 )
+
+[node name="CannonTip" type="Position2D" parent="Slime/Cannon"]
+position = Vector2( 16, 0 )

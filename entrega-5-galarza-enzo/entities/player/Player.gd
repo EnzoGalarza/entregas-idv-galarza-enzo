@@ -4,7 +4,7 @@ class_name Player
 signal hit()
 signal dead()
 
-onready var cannon = $Cannon
+onready var cannon = $Slime/Cannon
 onready var state_machine = $StateMachine
 onready var floor_raycasts:Array = $FloorRaycasts.get_children()
 onready var animation_player : AnimationPlayer = $AnimationPlayer
